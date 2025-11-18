@@ -136,15 +136,7 @@ If not set, the app defaults to a built-in placeholder key.
 
 ---
 
-## 🖼️ Screenshots
 
-| Home | PDF Summary | Quiz Generator |
-|------|--------------|----------------|
-| ![Home](docs/screenshot1.png) | ![Summary](docs/screenshot2.png) | ![Quiz](docs/screenshot3.png) |
-
-*(Screenshots are optional — add them in a `/docs` folder for your GitHub repo)*
-
----
 
 ## 🧩 Future Enhancements
 
@@ -156,13 +148,7 @@ If not set, the app defaults to a built-in placeholder key.
 
 ---
 
-## 🧑‍💻 Author
 
-**Vansh Agarwal**  
-📧 your.email@example.com  
-🔗 [LinkedIn](https://linkedin.com/in/yourprofile) | [GitHub](https://github.com/<your-username>)
-
----
 
 ## 📜 License
 
