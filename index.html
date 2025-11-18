@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyBuddy • Smart AI Learning Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ---------------- Root Theme ---------------- */
+    :root {
+      --primary: #6c5bca;
+      --accent: #26f58d;
+      --bg1: #050513;
+      --bg2: #0b0f24;
+      --card: rgba(20, 25, 50, 0.8);
+      --glass: rgba(18, 24, 48, 0.6);
+      --border: rgba(150, 160, 255, 0.2);
+      --text: #f3f6ff;
+      --muted: #adb9ff;
+      --radius: 20px;
+      --blur: 18px;
+      --shadow: 0 8px 35px rgba(0, 0, 0, 0.4);
+      --glow: 0 0 18px rgba(140, 130, 255, 0.3);
+    }
+
+    /* ---------------- Global ---------------- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ---------------- Header ---------------- */
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 55px 20px 45px;
+      background: linear-gradient(120deg, var(--primary), var(--accent));
+      border-bottom-left-radius: 35px;
+      border-bottom-right-radius: 35px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 140%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 9s infinite ease-in-out alternate;
+    }
+
+    header h1 {
+      font-family: "Poppins", sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin: 0;
+      text-shadow: 0 6px 25px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      margin-top: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      opacity: 0.92;
+      letter-spacing: 0.4px;
+    }
+
+    /* ---------------- Main Container ---------------- */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 40px 20px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+    }
+
+    /* ---------------- Card ---------------- */
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(var(--blur));
+      padding: 32px 28px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px rgba(100, 100, 255, 0.15);
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-weight: 700;
+    }
+
+    /* ---------------- Inputs ---------------- */
+    textarea, input[type="file"], input[type="number"] {
+      width: 100%;
+      background: rgba(18, 22, 35, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text);
+      padding: 14px 12px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      transition: 0.25s;
+    }
+
+    textarea:focus, input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(50, 230, 210, 0.3);
+      outline: none;
+    }
+
+    /* ---------------- Button ---------------- */
+    button {
+      background: linear-gradient(95deg, var(--primary), var(--accent));
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 14px 0;
+      width: 100%;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover::after {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 35px rgba(110, 120, 255, 0.3);
+    }
+
+    /* ---------------- Result ---------------- */
+    .result {
+      background: rgba(40, 45, 80, 0.3);
+      border: 1px solid rgba(150, 160, 255, 0.2);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 15px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      box-shadow: inset 0 0 15px rgba(100, 100, 200, 0.08);
+      position: relative;
+      animation: fadeIn 0.6s ease;
+      white-space: pre-line;
+    }
+
+    /* Copy Button */
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.1);
+      color: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 4px 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ---------------- Loader ---------------- */
+    .loading {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .shimmer {
+      width: 70px;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: shimmer 1s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -70px; }
+      100% { background-position: 70px; }
+    }
+
+    /* ---------------- Footer ---------------- */
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ---------------- Animations ---------------- */
+    @keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:none;} }
+    @keyframes float { from {transform: translateY(0);} to {transform: translateY(40px);} }
+
+    @media (max-width: 520px) {
+      header h1 { font-size: 2.1rem; }
+      header p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>StudyBuddy</h1>
+    <p>Your AI-powered study companion</p>
+  </header>
+
+  <div class="container">
+    <!-- Summarize PDF -->
+    <div class="card">
+      <h2>Summarize PDF</h2>
+      <form id="pdf-form">
+        <input type="file" id="pdf-file" accept="application/pdf" required />
+        <button type="submit">Summarize</button>
+      </form>
+      <div id="summary-loading" class="loading" style="display:none;">
+        <div class="shimmer"></div> Summarizing...
+      </div>
+      <div id="summary-result" class="result" style="display:none;">
+        <button class="copy-btn" onclick="copyText('summary-result')">Copy</button>
+      </div>
+    </div>
+
+    <!-- Quiz Generator -->
+    <div class="card">
+      <h2>Generate Quiz</h2>
+      <form id="quiz-form">
+        <textarea id="quiz-context" rows="6" placeholder="Paste your notes, passage, or topic..." required></textarea>
+        <label for="num-questions">How many questions?</label>
+        <input type="number" id="num-questions" value="3" min="1" max="10" />
+        <button type="submit">Generate Quiz</button>
+      </form>
+      <div id="quiz-loading" class="loading" style="display:none;">
+        <div class="shimmer"></div> Generating Quiz...
+      </div>
+      <div id="quiz-result" class="result" style="display:none;">
+        <button class="copy-btn" onclick="copyText('quiz-result')">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 StudyBuddy • Built with 💜 for learners worldwide</footer>
+
+  <script>
+    // --- Copy Helper ---
+    function copyText(id) {
+      const el = document.getElementById(id);
+      const text = el.textContent;
+      navigator.clipboard.writeText(text);
+      const btn = el.querySelector('.copy-btn');
+      btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = "Copy", 1500);
+    }
+
+    // --- PDF Summarization ---
+    const pdfForm = document.getElementById('pdf-form');
+    const pdfFile = document.getElementById('pdf-file');
+    const summaryResult = document.getElementById('summary-result');
+    const summaryLoading = document.getElementById('summary-loading');
+
+    pdfForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      summaryResult.style.display = 'none';
+      summaryLoading.style.display = 'flex';
+      const formData = new FormData();
+      formData.append('file', pdfFile.files[0]);
+      try {
+        const res = await fetch('/summarize', { method: 'POST', body: formData });
+        const data = await res.json();
+        summaryResult.textContent = data.summary || data.error || 'An error occurred.';
+      } catch {
+        summaryResult.textContent = '⚠️ Network or server error.';
+      }
+      summaryLoading.style.display = 'none';
+      summaryResult.style.display = 'block';
+    });
+
+    // --- Quiz Generation ---
+    const quizForm = document.getElementById('quiz-form');
+    const quizContext = document.getElementById('quiz-context');
+    const numQuestions = document.getElementById('num-questions');
+    const quizResult = document.getElementById('quiz-result');
+    const quizLoading = document.getElementById('quiz-loading');
+
+    quizForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      quizResult.style.display = 'none';
+      quizLoading.style.display = 'flex';
+      try {
+        const res = await fetch('/generate-quiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ context: quizContext.value, num_questions: +numQuestions.value })
+        });
+        const data = await res.json();
+        quizResult.textContent = data.quiz || data.error || 'An error occurred.';
+      } catch {
+        quizResult.textContent = '⚠️ Network or server error.';
+      }
+      quizLoading.style.display = 'none';
+      quizResult.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
